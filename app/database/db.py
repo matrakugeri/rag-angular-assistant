@@ -5,7 +5,9 @@ from sqlalchemy.orm import declarative_base, sessionmaker
 
 load_dotenv()
 
-db_url = os.getenv("DATABASE_URL", "sqlite:///./data/app.db")
+db_url = os.getenv("DATABASE_URL")
+if not db_url:
+    raise ValueError("DATABASE_URL is not set")
 
 connect_args = {"check_same_thread": False} if db_url.startswith("sqlite") else {}
 
