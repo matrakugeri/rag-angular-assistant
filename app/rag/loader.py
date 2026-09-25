@@ -11,11 +11,9 @@ def extract_clean_text(html: str) -> str:
     """
     soup = BeautifulSoup(html, "html.parser")
     
-    # Target main content container if present, otherwise default to full body
     main_content = soup.find("main") or soup.find("article") or soup.body
     
     if main_content:
-        # Remove unwanted UI components (scripts, styles, navs, footers)
         for element in main_content(["script", "style", "nav", "footer"]):
             element.decompose()
         return main_content.get_text(separator="\n", strip=True)
@@ -44,7 +42,6 @@ def scrape_angular_docs(
         }
     )
     
-    # Execute the recursive web crawler
     documents = loader.load()
     
     print(f"Crawling finished! Successfully collected {len(documents)} document pages.")
